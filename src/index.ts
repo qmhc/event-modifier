@@ -1,6 +1,27 @@
-type Process<E extends Event = Event> = (event: E, listener: (event: E) => any, ...args: any[]) => void
+export type Process<E extends Event = Event> = (event: E, listener: (event: E) => any, ...args: any[]) => void
 
-export interface EventModifier {
+/**
+ * Custom an event modifiers.
+ *
+ * @example
+ * ```ts
+ * declare module 'event-modifier' {
+ *   interface CustomModifier {
+ *     stopOthers: () => this
+ *   }
+ * }
+ *
+ * // create a guard for this modifier
+ * createGuard('stopOthers', e => e.stopImmediatePropagation())
+ *
+ * // use it
+ * eventModifier().stopOthers()
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CustomModifier {}
+
+export interface EventModifier extends CustomModifier {
   apply: <E extends Event = Event, R = void>(listener: (event: E) => R) => R,
 
   stop: () => this,
@@ -23,10 +44,16 @@ export interface EventModifier {
 
 const guards = new Map<string, Process<any>>()
 
-function createGuard<E extends Event = Event>(name: string, creator: Process<E>) {
+/**
+ * Create a guard for modifier.
+ *
+ * @param name the modifier name
+ * @param process the modifier process
+ */
+export function createGuard<E extends Event = Event>(name: string, process: Process<E>) {
   if (guards.has(name)) return
 
-  guards.set(name, creator)
+  guards.set(name, process)
 }
 
 export function eventModifier() {

@@ -8,6 +8,8 @@
 
 ## Usage
 
+Modifiers:
+
 ```ts
 // Also a shortcut alias 'em'
 import { eventModifier } from 'event-modifier'
@@ -23,7 +25,25 @@ eventModifier()
   .apply(listener)
 ```
 
-## Origin
+Create custom guards:
+
+```ts
+import { em, createGuard } from 'event-modifier'
+
+createGuard('stopOthers', e => e.stopImmediatePropagation())
+
+// for inferring type
+declare module 'event-modifier' {
+  interface CustomModifier {
+    stopOthers: () => this
+  }
+}
+
+// use
+em().stopOthers()
+```
+
+## Inspiration
 
 ```vue
 <template>
