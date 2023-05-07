@@ -1,6 +1,10 @@
 <h1 align="center">Event Modifier</h1>
 
 <p align="center">
+  Help you quickly modify event via chain apis
+</p>
+
+<p align="center">
   <a href="https://www.npmjs.com/package/event-modifier" target="_blank">
     <img src="https://img.shields.io/github/package-json/v/qmhc/event-modifier" alt="npm version"/>
   </a>
@@ -93,6 +97,10 @@ function render() {
 ```
 
 Lots of template code, Sad.
+
+## Route
+
+Maybe decorator?
 
 ## License
 
